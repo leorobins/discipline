@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Recreation Of Cosmos Footer</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+
+<!-- Circular Music Button -->
+<button id="musicButton" class="circular-music-button">
+    <div class="music-icon">
+        <span id="musicButtonText">♪</span>
+    </div>
+</button>
+
+<div class="content">
+        <small>We weclome you to join us!</small>
+        <h1>
+            FAKE 5
+        </h1>
+
+        <div class="buttons">
+
+            <form id="phoneForm" class="phone-form">
+                <input type="tel" id="phoneInput" placeholder="Phone Number" required>
+                <button type="submit" class="GlowingButton">
+                    <!-- Glow -->
+                    <div class="GlowingButton__glowWrap l"><span class="GlowingButton__glow"></span></div>
+                    <div class="GlowingButton__glowWrap r"><span class="GlowingButton__glow"></span></div>
+                    <!-- /Glow -->
+                    <!-- Overlay -->
+                    <span class="GlowingButton__overlay"></span>
+                    <!-- Overlay -->
+                    <!-- Content -->
+                    <div class="GlowingButton__content">
+                        <span>Be part of it</span>
+                        <span>Save Phone</span>
+                    </div>
+                    <!-- /Content -->
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" preload="auto">
+        <source src="./PROMOTION.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Congratulations Modal -->
+    <div id="congratsModal" class="congrats-modal">
+        <div class="congrats-content">
+            <div class="congrats-icon">🎉</div>
+            <h2>Congratulations!</h2>
+            <p>Thank you for joining us!</p>
+            <p class="phone-display" id="savedPhoneNumber"></p>
+            <p>We'll be in touch soon!</p>
+            <button class="congrats-close-btn" onclick="closeCongratsModal()">Continue</button>
+        </div>
+    </div>
+    
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+          }
+        }
+      </script>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'></script>
+  <script type="module" src="./script.js"></script>
+  <script>
+    // Phone number form handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const phoneForm = document.getElementById('phoneForm');
+      const phoneInput = document.getElementById('phoneInput');
+      
+      phoneForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const phoneNumber = phoneInput.value.trim();
+        
+        if (!phoneNumber) {
+          alert('Please enter a phone number');
+          return;
+        }
+        
+        // Remove formatting for storage (keep only digits and +)
+        const cleanPhoneNumber = phoneNumber.replace(/[^\d\+]/g, '');
+        
+        // Validate phone number length
+        if (cleanPhoneNumber.startsWith('+')) {
+          // International number - validate minimum length
+          if (cleanPhoneNumber.length < 8) {
+            alert('Please enter a valid international phone number');
+            return;
+          }
+        } else {
+          // US number - validate 10 digits
+          if (cleanPhoneNumber.length < 10) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+          }
+        }
+        
+        try {
+          const response = await fetch('/api/save-phone', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phoneNumber: cleanPhoneNumber })
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            showCongratsModal(phoneNumber);
+            phoneInput.value = '';
+          } else {
+            alert('Error: ' + result.message);
+          }
+        } catch (error) {
+          console.error('Error saving phone number:', error);
+          alert('Error saving phone number. Please try again.');
+        }
+      });
+      
+      // Phone number validation and formatting
+      phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value;
+        
+        // Allow +, digits, spaces, parentheses, and hyphens
+        value = value.replace(/[^\d\s\+\-\(\)]/g, '');
+        
+        // If it doesn't start with +, add it automatically
+        if (value.length > 0 && !value.startsWith('+')) {
+          value = '+' + value;
+        }
+        
+        // Handle international numbers starting with +
+        if (value.startsWith('+')) {
+          // For Brazilian numbers: +55 (22) 99778-8649
+          if (value.startsWith('+55')) {
+            let digits = value.replace(/[^\d]/g, '');
+            if (digits.length >= 13) { // +55 + 2 digits area + 9 digits number
+              let area = digits.slice(2, 4);
+              let number = digits.slice(4);
+              if (number.length <= 5) {
+                value = `+55 (${area}) ${number}`;
+              } else {
+                value = `+55 (${area}) ${number.slice(0, 5)}-${number.slice(5, 9)}`;
+              }
+            } else if (digits.length >= 4) {
+              let area = digits.slice(2, 4);
+              let number = digits.slice(4);
+              value = `+55 (${area}) ${number}`;
+            } else if (digits.length >= 2) {
+              value = `+55 (${digits.slice(2)}`;
+            }
+          } else {
+            // For other international numbers, just clean up
+            value = value.replace(/(\+\d{1,3})(\d{3})(\d{3})(\d{4})/, '$1 ($2) $3-$4');
+          }
+        }
+        
+        e.target.value = value;
+      });
+      
+      // Music player functionality
+      const musicButton = document.getElementById('musicButton');
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      const musicButtonText = document.getElementById('musicButtonText');
+      
+      let isPlaying = false;
+      
+      musicButton.addEventListener('click', function() {
+        if (isPlaying) {
+          // Pause music
+          backgroundMusic.pause();
+          musicButtonText.textContent = '♪';
+          musicButton.classList.remove('playing');
+          isPlaying = false;
+        } else {
+          // Play music
+          backgroundMusic.play().then(() => {
+            musicButtonText.textContent = '⏸';
+            musicButton.classList.add('playing');
+            isPlaying = true;
+          }).catch(error => {
+            console.error('Error playing music:', error);
+            alert('Error playing music. Please try again.');
+          });
+        }
+      });
+      
+      // Handle music end
+      backgroundMusic.addEventListener('ended', function() {
+        musicButtonText.textContent = '♪';
+        musicButton.classList.remove('playing');
+        isPlaying = false;
+      });
+    });
+    
+    // Congratulations modal functions
+    function showCongratsModal(phoneNumber) {
+      const modal = document.getElementById('congratsModal');
+      const phoneDisplay = document.getElementById('savedPhoneNumber');
+      
+      phoneDisplay.textContent = phoneNumber;
+      modal.style.display = 'flex';
+      
+      // Prevent scrolling on body
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeCongratsModal() {
+      const modal = document.getElementById('congratsModal');
+      modal.style.display = 'none';
+      
+      // Restore scrolling on body
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal when clicking outside
+    document.getElementById('congratsModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeCongratsModal();
+      }
+    });
+  </script>
+
+</body>
+</html>

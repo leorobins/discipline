@@ -1,0 +1,704 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  height:100%;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  color: rgba(252, 253, 255, 0.937);
+  font-family: "Roboto", sans-serif;
+  align-items: center;
+  background-color: #080808 !important;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  gap: 20px;
+  max-width: 100%;
+  width: 100%;
+  padding: 0 20px;
+}
+
+small {
+  font-size: 16px;
+  color: rgb(91, 90, 85);
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  font-size: clamp(32px, 8vw, 56px);
+  letter-spacing: -2px;
+  line-height: 1.1;
+  font-weight: normal;
+  word-wrap: break-word;
+}
+
+.section-btns {
+  display: inline-flex;
+  padding: 10px 20px;
+  background: white;
+  color: #000;
+  border-radius: 18px;
+  gap: 10px;
+  text-wrap: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.section-btns.right {
+  background: transparent;
+  color: white;
+}
+
+input {
+  border-radius: 14px;
+  height: 40px;
+  background: rgba(83, 83, 83, 0.2);
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  color: rgb(101, 101, 101);
+  display: inline-flex;
+  width: 100%;
+  max-width: 200px;
+  align-items: center;
+  padding: 0 15px;
+  transition: 0.5s all ease;
+  box-shadow: none;
+  border: none;
+}
+
+input:hover {
+  color: #fff;
+}
+
+.buttons {
+  display: flex;
+  gap: 17px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.phone-form {
+  display: flex;
+  gap: 17px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.phone-form input {
+  margin: 0;
+}
+
+/* Glowing Button */
+.GlowingButton {
+  position: relative;
+  display: inline-flex;
+  height: 40px;
+  width: 160px;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.GlowingButton__overlay {
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 14px;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.GlowingButton__glowWrap {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 65.93%;
+  height: 86.36%;
+}
+
+.GlowingButton__glowWrap.l {
+  left: -4px;
+}
+
+.GlowingButton__glowWrap.r {
+  right: -4px;
+}
+
+.GlowingButton__glow {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  border-radius: 14px;
+  filter: blur(15px);
+  display: block;
+  will-change: transform, filter, opacity;
+  transition: 0.6s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.GlowingButton__glowWrap.l .GlowingButton__glow {
+  background: rgb(213, 159, 255);
+}
+
+.GlowingButton__glowWrap.r .GlowingButton__glow {
+  background: rgb(117, 215, 245);
+}
+
+.GlowingButton__content {
+  overflow: hidden;
+  color: #000;
+  position: relative;
+  height: fit-content;
+  z-index: 3;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.GlowingButton__content span {
+  display: block;
+  transition: 0.5s transform cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.GlowingButton__content span:nth-child(2) {
+  position: absolute;
+}
+
+/* Hover State */
+.GlowingButton:hover .GlowingButton__content span:nth-child(1) {
+  transform: translateY(-100%);
+}
+
+.GlowingButton:hover .GlowingButton__content span:nth-child(2) {
+  transform: translateY(-100%);
+}
+
+.GlowingButton:hover .GlowingButton__glow {
+  filter: blur(20px);
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  .content {
+    gap: 15px;
+    padding: 0 10px;
+  }
+  
+  h1 {
+    font-size: clamp(28px, 6vw, 48px);
+    letter-spacing: -1px;
+  }
+  
+  small {
+    font-size: 14px;
+  }
+  
+  .buttons {
+    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .phone-form {
+    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input {
+    max-width: 180px;
+    height: 38px;
+  }
+  
+  .GlowingButton {
+    width: 140px;
+    height: 38px;
+    min-width: 120px;
+  }
+  
+  .GlowingButton__content {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .content {
+    gap: 12px;
+    padding: 0 5px;
+  }
+  
+  h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    letter-spacing: -0.5px;
+  }
+  
+  small {
+    font-size: 13px;
+  }
+  
+  .buttons {
+    gap: 10px;
+  }
+  
+  .phone-form {
+    gap: 10px;
+  }
+  
+  input {
+    max-width: 160px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .GlowingButton {
+    width: 130px;
+    height: 36px;
+    min-width: 110px;
+  }
+  
+  .GlowingButton__content {
+    font-size: 12px;
+  }
+  
+  .section-btns {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  body {
+    padding: 8px;
+  }
+  
+  .content {
+    gap: 10px;
+  }
+  
+  h1 {
+    font-size: clamp(20px, 4vw, 28px);
+  }
+  
+  small {
+    font-size: 12px;
+  }
+  
+  input {
+    max-width: 140px;
+    height: 34px;
+    font-size: 13px;
+  }
+  
+  .GlowingButton {
+    width: 120px;
+    height: 34px;
+    min-width: 100px;
+  }
+  
+  .GlowingButton__content {
+    font-size: 11px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+  body {
+    padding: 10px;
+  }
+  
+  .content {
+    gap: 10px;
+  }
+  
+  h1 {
+    font-size: clamp(20px, 4vw, 32px);
+  }
+  
+  .buttons {
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .GlowingButton__glow {
+    filter: blur(20px);
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .GlowingButton__glow {
+    transition: none;
+  }
+  
+  .GlowingButton__content span {
+    transition: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000 !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  .GlowingButton__glow {
+    display: none;
+  }
+  
+  canvas {
+    display: none;
+  }
+}
+
+/* Circular Music Button */
+.circular-music-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.circular-music-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.circular-music-button:active {
+  transform: scale(0.95);
+}
+
+.music-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.music-icon span {
+  font-size: 24px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.circular-music-button:hover .music-icon span {
+  transform: scale(1.1);
+}
+
+/* Music playing state */
+.circular-music-button.playing {
+  background: rgba(213, 159, 255, 0.3);
+  border-color: rgba(213, 159, 255, 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(213, 159, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(213, 159, 255, 0.6);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(213, 159, 255, 0.3);
+  }
+}
+
+/* Responsive adjustments for music button */
+@media (max-width: 768px) {
+  .circular-music-button {
+    top: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .music-icon span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .circular-music-button {
+    top: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .music-icon span {
+    font-size: 18px;
+  }
+}
+
+/* Congratulations Modal */
+.congrats-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.5s ease;
+}
+
+.congrats-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.6s ease;
+}
+
+.congrats-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  animation: bounce 1s ease infinite;
+}
+
+.congrats-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: #fff;
+  margin: 0 0 15px 0;
+  font-weight: normal;
+}
+
+.congrats-content p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.phone-display {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  background: rgba(213, 159, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  border: 1px solid rgba(213, 159, 255, 0.4);
+}
+
+.congrats-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.congrats-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 768px) {
+  .congrats-content {
+    padding: 30px 20px;
+    max-width: 350px;
+  }
+  
+  .congrats-icon {
+    font-size: 50px;
+  }
+  
+  .congrats-content h2 {
+    font-size: 24px;
+  }
+  
+  .congrats-content p {
+    font-size: 14px;
+  }
+  
+  .phone-display {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+  
+  .congrats-close-btn {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .congrats-content {
+    padding: 25px 15px;
+    max-width: 300px;
+  }
+  
+  .congrats-icon {
+    font-size: 45px;
+  }
+  
+  .congrats-content h2 {
+    font-size: 22px;
+  }
+  
+  .congrats-content p {
+    font-size: 13px;
+  }
+  
+  .phone-display {
+    font-size: 15px;
+    padding: 6px 12px;
+  }
+  
+  .congrats-close-btn {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+}
